@@ -47,6 +47,9 @@ INSTALLED_APPS = [
 
     # 3rd
     'rest_framework'
+    'celery'
+    'redis'
+    'django-tenants'
 
 ]
 
@@ -140,5 +143,8 @@ REST_FRAMEWORK = {
     )
 }
 
-
+# db router multi tenancy
 DATABASE_ROUTERS = ['tenant_router.db_router.TenantRouter']
+
+# celery
+CELERY_BROKER_URL = 'redis://localhost:6379/0'
