@@ -139,3 +139,6 @@ REST_FRAMEWORK = {
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     )
 }
+
+
+DATABASE_ROUTERS = ['tenant_router.db_router.TenantRouter']
