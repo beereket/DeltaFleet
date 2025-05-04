@@ -1,0 +1,46 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pyc
+*.egg-info/
+*.egg
+*.env
+.venv/
+env/
+venv/
+
+# Django
+db.sqlite3
+*.log
+*.pot
+*.pyc
+*.mo
+media/
+staticfiles/
+
+# macOS
+.DS_Store
+
+# IDEs
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+dist/
+
+# Environment files
+.env
+.env.*
+
+# Byte-compiled and cache
+*.py[cod]
+__pycache__/
+.pytest_cache/
