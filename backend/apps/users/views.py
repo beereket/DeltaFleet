@@ -5,6 +5,8 @@ from django.contrib.auth import authenticate
 from rest_framework.permissions import AllowAny
 from rest_framework_simplejwt.tokens import RefreshToken
 from .serializers import RegisterSerializer, LoginSerializer, UserSerializer
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.decorators import api_view, permission_classes
 
 class RegisterView(APIView):
     permission_classes = [AllowAny]
@@ -34,3 +36,8 @@ class LoginView(APIView):
                 })
             return Response({"error": "Invalid credentials"}, status=status.HTTP_401_UNAUTHORIZED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def protected_view(request):
+    return Response({"message": f"Hello {request.user.username}, you are authenticated!"})
