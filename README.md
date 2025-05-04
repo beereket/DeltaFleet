@@ -1,8 +1,35 @@
-# DeltaFleet
+# DeltaFleet 🚚
 
-DeltaFleet is a multi-tenant fleet and logistics SaaS platform built with Django, PostgreSQL, and Vue 2, featuring real-time tracking, optimized routing, and modular architecture suitable for cloud deployment.
+**DeltaFleet** is a multi-tenant fleet & logistics management SaaS platform designed to streamline operations for delivery, transportation, and logistics companies. It provides real-time visibility, role-based access control, and data-driven insights for managing drivers, vehicles, and delivery assignments — all in one place.
 
----
+## 🚀 Key Features
+
+- 🌐 **Multi-Tenant Architecture** — Each company has isolated data and admin access
+- 🧑‍✈️ **Role-Based Dashboards** — Admins, Managers, and Drivers see only what they need
+- 📍 **Real-Time Fleet Tracking** — Live trip monitoring with location updates
+- 🗺️ **Smart Trip Management** — Assignments, routing, and delivery status updates
+- 💼 **Billing & Reporting** — Subscription management and automated operational reports
+- 📱 **Mobile-Ready** — Optimized for field use with offline mode and push notifications
+
+## 🔐 User Roles
+
+| Role     | Description                              |
+|----------|------------------------------------------|
+| Admin    | Full control over company fleet and users |
+| Manager  | Assign trips and monitor drivers          |
+| Driver   | View/update own delivery assignments      |
+
+## 💡 Technologies
+
+- **Backend:** Django, Django REST Framework, PostgreSQL, Celery
+- **Frontend:** Vue.js with Vue Router & Pinia
+- **Real-Time:** Django Channels + WebSocket
+- **DevOps:** Docker, Redis, GitHub Actions, Prometheus/Grafana
+
+## 🏁 Goal
+
+Provide logistics teams a scalable, secure, and real-time SaaS platform to improve fleet efficiency, reduce operational friction, and deliver faster.
+
 
 ## 🚀 Tech Stack
 
