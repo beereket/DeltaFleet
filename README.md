@@ -9,7 +9,6 @@
 - 📍 **Real-Time Fleet Tracking** — Live trip monitoring with location updates
 - 🗺️ **Smart Trip Management** — Assignments, routing, and delivery status updates
 - 💼 **Billing & Reporting** — Subscription management and automated operational reports
-- 📱 **Mobile-Ready** — Optimized for field use with offline mode and push notifications
 
 ## 🔐 User Roles
 
