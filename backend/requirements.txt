@@ -1,8 +1,22 @@
-Django>=4.2
-djangorestframework
-djangorestframework-simplejwt
-psycopg2-binary
-python-decouple
-django-tenants
-celery
-redis
+# Core
+Django>=4.2,<5.0
+djangorestframework>=3.14
+python-decouple>=3.8
+
+# PostgreSQL
+psycopg2-binary>=2.9
+
+# Auth
+djangorestframework-simplejwt>=5.3.0
+
+# Asynchronous tasks
+celery>=5.3
+redis>=5.0.0
+
+# CORS and security
+django-cors-headers>=4.0
+django-environ>=0.11.2
+
+# Optional
+gunicorn>=21.2.0
+Pillow>=10.0.0
