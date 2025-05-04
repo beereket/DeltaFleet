@@ -6,7 +6,6 @@ DEBUG = True
 ALLOWED_HOSTS = ['*']  # during development
 
 # Use SQLite for simple local dev OR PostgreSQL
-# If you're using Docker from the beginning, keep this PostgreSQL config
 DATABASES['default'] = {
     'ENGINE': 'django.db.backends.postgresql',
     'NAME': config('POSTGRES_DB', default='deltafleet'),
