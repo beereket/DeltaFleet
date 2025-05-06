@@ -17,12 +17,27 @@ INSTALLED_APPS = [
 
     # local
     'apps.users',
+    'apps.fleet',
+    'apps.trips',
+    'apps.notifications',
     # 3rd
     'rest_framework',
     'corsheaders',
 
-]
+    #websocket
+    'channels',
 
+]
+ASGI_APPLICATION = 'backend.routing.application'
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [('127.0.0.1', 6379)],  # Подключение к Redis
+        },
+    },
+}
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -75,7 +90,13 @@ REST_FRAMEWORK = {
     ),
 }
 
-
+SIMPLE_JWT = {
+    'AUTH_HEADER_TYPES': ('JWT',),
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=15),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
+    'ROTATE_REFRESH_TOKENS': False,
+    'BLACKLIST_AFTER_ROTATION': True,
+}
 DATABASES = {}
 
 AUTH_USER_MODEL = 'users.User'
