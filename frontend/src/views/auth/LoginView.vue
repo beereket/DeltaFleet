@@ -1,71 +1,47 @@
 <template>
-  <div class="auth-container">
+  <div>
     <h2>Login</h2>
-    <form @submit.prevent="login">
-      <input v-model="form.username" placeholder="Username" required />
-      <input v-model="form.password" placeholder="Password" type="password" required />
-      <button type="submit">Login</button>
-    </form>
-    <p v-if="message">{{ message }}</p>
+    <input v-model="username" placeholder="Username" />
+    <input v-model="password" type="password" placeholder="Password" />
+    <div v-if="requires2FA">
+      <input v-model="otpCode" placeholder="Enter OTP Code" />
+    </div>
+    <button @click="login">{{ requires2FA ? 'Verify OTP' : 'Login' }}</button>
   </div>
 </template>
 
-<script setup>
-import { ref } from 'vue'
-import axios from 'axios'
+<script>
+import axios from 'axios';
 
-const form = ref({ username: '', password: '' })
-const message = ref('')
+export default {
+  data() {
+    return {
+      username: '',
+      password: '',
+      otpCode: '',
+      requires2FA: false,
+    };
+  },
+  methods: {
+    async login() {
+      try {
+        const response = await axios.post('http://127.0.0.1:8000/api/two-step-login/', {
+          username: this.username,
+          password: this.password,
+          otp_code: this.requires2FA ? this.otpCode : null,
+        });
 
-async function login() {
-  try {
-    const res = await axios.post('http://localhost:8000/api/login/', form.value)
-    localStorage.setItem('access_token', res.data.access)
-    localStorage.setItem('refresh_token', res.data.refresh)
-    message.value = 'Login successful!'
-  } catch (err) {
-    message.value = err.response?.data?.detail || 'Login failed'
+        if (response.data.requires_2fa) {
+          this.requires2FA = true;
+        } else if (response.data.access) {
+          localStorage.setItem('access', response.data.access);
+          localStorage.setItem('refresh', response.data.refresh);
+          this.$router.push('/dashboard');
+        }
+      } catch (err) {
+        alert('Login failed: ' + (err.response?.data?.detail || 'Unknown error'));
+      }
+    }
   }
-}
+};
 </script>
-
-<style scoped>
-.auth-container {
-  max-width: 400px;
-  margin: 50px auto;
-  padding: 30px;
-  background: #f9f9f9;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-.auth-container h2 {
-  text-align: center;
-  margin-bottom: 20px;
-}
-.auth-container input {
-  display: block;
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 15px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
-.auth-container button {
-  width: 100%;
-  padding: 10px;
-  background-color: #42b983;
-  border: none;
-  color: white;
-  font-weight: bold;
-  cursor: pointer;
-  border-radius: 5px;
-}
-.auth-container button:hover {
-  background-color: #369b6b;
-}
-.auth-container p {
-  margin-top: 10px;
-  text-align: center;
-  color: #555;
-}
-</style>

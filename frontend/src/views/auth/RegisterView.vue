@@ -1,77 +1,38 @@
 <template>
-  <div class="auth-container">
+  <div>
     <h2>Register</h2>
-    <form @submit.prevent="register">
-      <input v-model="form.username" placeholder="Username" required />
-      <input v-model="form.email" placeholder="Email" type="email" required />
-      <input v-model="form.password" placeholder="Password" type="password" required />
-      <select v-model="form.role">
-        <option value="admin">Admin</option>
-        <option value="driver">Driver</option>
-        <option value="manager">Manager</option>
-      </select>
-      <button type="submit">Register</button>
-    </form>
-    <p v-if="message">{{ message }}</p>
+    <input v-model="username" placeholder="Username" />
+    <input v-model="email" type="email" placeholder="Email" />
+    <input v-model="password" type="password" placeholder="Password" />
+    <button @click="register">Register</button>
   </div>
 </template>
 
-<script setup>
-import { ref } from 'vue'
-import axios from 'axios'
+<script>
+import authService from "@/services/authService";
 
-const form = ref({ username: '', email: '', password: '', role: 'driver' })
-const message = ref('')
-
-async function register() {
-  try {
-    const res = await axios.post('http://localhost:8000/api/register/', form.value)
-    console.log('Registration response:', res)
-    message.value = 'User registered successfully!'
-  } catch (err) {
-    message.value = err.response?.data?.detail || 'Error registering user'
+export default {
+  data() {
+    return {
+      username: '',
+      email: '',
+      password: ''
+    };
+  },
+  methods: {
+    async register() {
+      try {
+        await authService.register({
+          username: this.username,
+          email: this.email,
+          password: this.password
+        });
+        alert('Registration successful! Please check your email for verification.');
+        this.$router.push('/login');
+      } catch (err) {
+        alert('Registration failed: ' + (err.response?.data?.detail || 'Unknown error'));
+      }
+    }
   }
-}
+};
 </script>
-
-<style scoped>
-.auth-container {
-  max-width: 400px;
-  margin: 50px auto;
-  padding: 30px;
-  background: #f9f9f9;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-.auth-container h2 {
-  text-align: center;
-  margin-bottom: 20px;
-}
-.auth-container input,
-.auth-container select {
-  display: block;
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 15px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
-.auth-container button {
-  width: 100%;
-  padding: 10px;
-  background-color: #42b983;
-  border: none;
-  color: white;
-  font-weight: bold;
-  cursor: pointer;
-  border-radius: 5px;
-}
-.auth-container button:hover {
-  background-color: #369b6b;
-}
-.auth-container p {
-  margin-top: 10px;
-  text-align: center;
-  color: #555;
-}
-</style>
